@@ -20,8 +20,6 @@ namespace BlogApp.Controllers
             return View(await blogs.ToListAsync());
         }
 
-
-
         public IActionResult Create()
         {
             return View();

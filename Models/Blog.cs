@@ -11,12 +11,11 @@ namespace BlogApp.Models
         [Display(Name = "Title")]
         [Required]
         [MaxLength(18, ErrorMessage = "Title must be least 10 character")]
-        public String Title { get; set; }
+        public string? Title { get; set; }
         [Required]
-        public String Content { get; set; }
-        public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        [ValidateNever]
-        public String Image { get; set; }
+        public string? Content { get; set; }
+        public DateTime? CreatedDateTime { get; set; } = DateTime.UtcNow;
+        public string? Image { get; set; }
 
     }
 }

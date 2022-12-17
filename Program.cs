@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// builder.Services.AddDbContext<BlogContext> ; 
+builder.Services.AddDbContext<BlogApp.Models.BlogContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
+
+
 
 var app = builder.Build();
 

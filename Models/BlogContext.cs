@@ -1,13 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace BlogApp.Models
 {
     public class BlogContext :DbContext  {
-        public BlogContext(DbContextOptions<BlogContext> options) : base(options)
+       private readonly IConfiguration _configuration;
+
+        public BlogContext(IConfiguration configuration)
         {
+            _configuration = configuration;
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("PostgreSQL"));
 
         }
+
+        
         public DbSet<Blog> Blogs { get; set; }
     }
 
