@@ -1,6 +1,88 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@using BlogApp.Models
+
 @{
+    ViewData["Title"] = "Index";
 }
+
+@model List<BlogApp.Models.Blog>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@* @if (User.Identity.IsAuthenticated)
+{
+    <a href="/Blog/Create" class="btn btn-primary">Create New Blog</a>
+} *@
+
+@if(Model.Count == 0)
+{
+    <h1>There is no blog</h1>
+}
+
+<div  class="wrapper" >
+   @foreach (var item in Model) {
+       <div class="card" style="width: 18rem;">
+            @if (!string.IsNullOrEmpty(item.Image))
+            {
+              <img src="data:image/png;base64,@Html.Raw(item.Image)" />
+            }
+            else
+            {
+                <img src="~/images/default.jpg" alt="imageX" />
+            }
+           <div class="card-body h-50">
+               <h5 class="card-title">@item.Title</h5>
+                <p class="card-text">@item.Content</p>
+                <p class="card-text">@item.CreatedDateTime</p>
+                <a href="/Blog/Detail/@item.BlogId" class="btn btn-primary">See More </a>
+              
+                
+              </div>
+
+        </div>
+   }
+
+</div>
+
+
+<style>
+    .wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .card {
+        margin: 10px;
+        max-height: 400px;
+    }
+
+    .card-img-top {
+        width: 100%;
+    }
+
+    .card-text {
+        height: 100px;
+        overflow: hidden;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        @* border: 2px solid red; *@
+        max-height: 250px;
+    }
+
+    .card-body > a {
+        align-self: flex-end;
+    }
+
+
+</style>
 

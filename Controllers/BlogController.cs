@@ -31,6 +31,18 @@ namespace BlogApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                 var image = Request.Form.Files[0];
+
+                if (image != null && image.Length > 0)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        await image.CopyToAsync(stream);
+                        blog.Image = Convert.ToBase64String(stream.ToArray());
+                    }
+                }
+
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Blog");
@@ -39,82 +51,108 @@ namespace BlogApp.Controllers
         }
 
 
-        public async Task<IActionResult> BookDetail(int? id)
+        public async Task<IActionResult> Detail(int? id)
         {
+            // burda not found sayfası eklenmelı 
+
             if (id == null)
             {
-                return NotFound();
-            }
-
-            var blog = await _context.Blogs.FirstOrDefaultAsync(m => m.BlogId == id);
-
-            if (blog == null)
-            {
-                return NotFound();
-            }
-
-            return View(blog);
-        }
-
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
+                  return RedirectToAction("NotFound", "Error");
             }
 
             var blog = await _context.Blogs.FindAsync(id);
 
             if (blog == null)
             {
-                return NotFound();
+             return RedirectToAction("NotFound", "Error");
+            }
+
+            return View(blog);
+        }
+
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+               return RedirectToAction("NotFound", "Error");
+            }
+
+            var blog = await _context.Blogs.FindAsync(id);
+
+            if (blog == null)
+            {
+               return RedirectToAction("NotFound", "Error");
             }
             return View(blog);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, Blog blog)
+     
+        public async Task<IActionResult> Edit( int id , Blog blog)
         {
+            // var target = await _context.Blogs.FindAsync(id);
+
+
             if (id != blog.BlogId)
             {
-                return NotFound();
+                // return NotFound();
+               return RedirectToAction("NotFound", "Error");
+
             }
+   
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(blog);
-                    await _context.SaveChangesAsync();
+
+                    var image = Request.Form.Files[0];
+
+                    if (image != null && image.Length > 0)
+                    {
+                        using (var stream = new MemoryStream())
+                        {
+                            await image.CopyToAsync(stream);
+                            blog.Image = Convert.ToBase64String(stream.ToArray());
+                        }
+
+                    }
+
+                     _context.Update(blog);
+                      await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    return NotFound();
+               return RedirectToAction("NotFound", "Error");
                 }
 
                 return RedirectToAction("Index");
 
             }
             return View(blog);
-
         }
 
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        public async Task<IActionResult> Delete(int id)
+        {       
 
-            var blog = await _context.Blogs.FirstOrDefaultAsync(m => m.BlogId == id);
+            var blog = await _context.Blogs.FindAsync(id);
 
+            
             if (blog == null)
             {
-                return NotFound();
+                return RedirectToAction("NotFound", "Error");
             }
 
-            return View(blog);
+            _context.Blogs.Remove(blog);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+
+            // return View(blog);
         }
 
 
@@ -126,7 +164,7 @@ namespace BlogApp.Controllers
 
             if (blog == null)
             {
-                return NotFound();
+                 return RedirectToAction("NotFound", "Error");
             }
 
             _context.Remove(blog);

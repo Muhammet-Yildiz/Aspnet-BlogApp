@@ -1,0 +1,13 @@
+
+@model BlogApp.Models.Blog
+
+<h2> id : @Model.BlogId</h2>
+<h2>@Model.Title</h2>
+<p>@Model.Content</p>
+
+
+
+
+<a href="/Blog/Edit/@Model.BlogId" class="btn btn-warning"> Edit  </a>
+
+<a href="/Blog/Delete/@Model.BlogId" class="btn btn-danger"> Delete  </a>

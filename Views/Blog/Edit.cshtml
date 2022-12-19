@@ -1,0 +1,54 @@
+@model BlogApp.Models.Blog
+
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <form  asp-action="Edit"
+         enctype="multipart/form-data"
+        >
+            <h1 class="text-center mb-3">Edit Blog</h1>
+            <div 
+            asp-validation-summary="ModelOnly" class="text-danger small"></div>
+            
+
+            <div class="form-group mb-3">
+              <input type="hidden" asp-for="@Model.BlogId" />
+
+                <label asp-for="Title" class="form-label">Title</label>
+                <input asp-for="Title" class="form-control" placeholder="Title" 
+                    value="@Model.Title"
+                />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Content" class="form-label">Content</label>
+
+                <textarea type="text" class="form-control" placeholder="Content"   asp-for="Content"
+                value="@Model.Content"
+                ></textarea>
+
+                <span 
+                
+                asp-validation-for="Content" class="text-danger small"></span>
+            </div>
+
+               <div  class="form-group mb-3" >
+                <label asp-for="Image" class="form-label">Image</label>
+                  <input type="file" asp-for="Image"
+                    value="data:image/png;base64,@Html.Raw(Model.Image)"
+                   />
+                <span asp-validation-for="Image" class="text-danger small"></span>
+                @* @Model.Image *@
+                   <img
+                    style="width: 100px; height: 100px;"
+                    src="data:image/png;base64,@Html.Raw(Model.Image)" />
+                </div>
+
+            
+            <div class="form-group d-grid mb-3">
+                <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Edit Blog</button>
+            </div>
+        </form>
+    </div>
+</div>

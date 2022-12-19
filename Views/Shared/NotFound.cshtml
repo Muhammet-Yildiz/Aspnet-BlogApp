@@ -1,0 +1,24 @@
+@model ErrorViewModel
+
+<h1>@Model.Message</h1>
+
+@if (Model.ShowRequestId)
+{
+    <p>Request ID: @Model.RequestId</p>
+}
+
+<div
+>
+
+<img src="~/images/notfound.png" alt="ASP.NET" class="img-responsive" />
+</div>
+
+
+<style>
+    .img-responsive {
+        display: block;
+        max-width: 80%;
+        height: 450px;
+    }
+</style>
+

@@ -15,7 +15,13 @@ namespace BlogApp.Models
         [Required]
         public string? Content { get; set; }
         public DateTime? CreatedDateTime { get; set; } = DateTime.UtcNow;
+
+         [Display(Name = "Image")]
+        [DataType(DataType.Upload)]
         public string? Image { get; set; }
+
+
+        
 
     }
 }
