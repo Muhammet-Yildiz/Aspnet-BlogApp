@@ -20,8 +20,8 @@ namespace BlogApp.Models
         [DataType(DataType.Upload)]
         public string? Image { get; set; }
 
+        public List<Comment>? Comments { get; set; }
 
-        
 
     }
 }

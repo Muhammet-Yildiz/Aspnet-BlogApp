@@ -1,0 +1,12 @@
+
+<div class="comment-top mt-4">
+    <h4>Bir yorum yaz @Model.BlogId </h4>
+    <div class="comment-bottom">
+        <form asp-action="Create" asp-controller="Comment" method="post">
+            <input type="hidden" name="BlogId" value="@Model.BlogId" >
+
+            <input class="form-control" type="text" name="Author" placeholder="Author" required="">
+            <textarea class="form-control" name="Content" placeholder="Yorum..." required=""></textarea>
+            <button type="submit" id="btnComment" class="btn btn-primary submit">Yorum Yap</button>
+        </form>
+ </div>

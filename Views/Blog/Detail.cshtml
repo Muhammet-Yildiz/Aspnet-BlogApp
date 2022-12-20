@@ -1,13 +1,46 @@
 
 @model BlogApp.Models.Blog
+    @{
+    ViewData["Title"] = "Detail Blog";
+}
 
 <h2> id : @Model.BlogId</h2>
 <h2>@Model.Title</h2>
 <p>@Model.Content</p>
 
+  <img
+   style="width: 100px; height: 100px;"
+      src="data:image/png;base64,@Html.Raw(Model.Image)" />
 
+@* @Model.Comments.Count *@
 
 
 <a href="/Blog/Edit/@Model.BlogId" class="btn btn-warning"> Edit  </a>
 
 <a href="/Blog/Delete/@Model.BlogId" class="btn btn-danger"> Delete  </a>
+
+
+COMMENT BLOG 
+
+
+@foreach (var item in Model.Comments.ToList()  )
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@item.Author</h5>
+            <p class="card-text">@item.Content</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+}
+
+
+
+
+
+@await Html.PartialAsync("~/Views/Comment/Create.cshtml")
+
+
+
+
+
