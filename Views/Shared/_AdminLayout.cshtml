@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BlogApp</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BlogApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+</head>
+
+<body id="body-pd">
+    @* <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-4">Sidebar</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+        <a href="#" class="nav-link active" aria-current="page">
+        <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+        Home
+        </a>
+        </li>
+        <li>
+        <a href="#" class="nav-link link-dark">
+        <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+        Dashboard
+        </a>
+        </li>
+        <li>
+        <a href="#" class="nav-link link-dark">
+        <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+        Orders
+        </a>
+        </li>
+        <li>
+        <a href="#" class="nav-link link-dark">
+        <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+        Products
+        </a>
+        </li>
+        <li>
+        <a href="#" class="nav-link link-dark">
+        <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+        Customers
+        </a>
+        </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+        <strong>mdo</strong>
+        </a>
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+        <li><a class="dropdown-item" href="#">New project...</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+        </div>
+        </div>
+        <div class="container">
+        <main role="main" class="pb-3">
+        @RenderBody()
+        </main>
+        </div> *@
+
+    <header class="header" id="header">
+        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt=""> </div>
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span
+                        class="nav_logo-name">BlogApp</span> </a>
+                <div class="nav_list"> 
+                    @* <a href="#" class="nav_link active"> 
+                            <i class='bx bx-grid-alt nav_icon'></i>
+                                <span class="nav_name">Users</span> 
+                        </a> *@
+                        
+                         <a href="/Admin/Users" class="nav_link " >
+                                <i  class='bx bx-user nav_icon'></i>
+                                <span class="nav_name">Users</span>
+                         </a>
+                         
+                          <a href="/Admin/Blogs" class="nav_link">
+                             <i class='bx bx-message-square-detail nav_icon'></i> 
+                             <span  class="nav_name">Blogs</span>
+                         </a> 
+                         
+                         <a href="/Admin/Comments" class="nav_link"> <i
+                            class='bx bx-bookmark nav_icon'></i> 
+                            <span class="nav_name">Comments</span> 
+                        </a>
+                        
+                         @* <a href="#"  class="nav_link"> 
+                            <i class='bx bx-folder nav_icon'></i> 
+                            <span class="nav_name">Files</span>
+                         </a>
+
+                      <a href="#" class="nav_link"> 
+                        <i class='bx bx-bar-chart-alt-2 nav_icon'></i>
+                         <span  class="nav_name">Comments</span> 
+                    </a> *@
+                     </div>
+                     
+                      </div>
+            
+                    <a href="/Blog" class="nav_link">
+                         <i class='bx bx-log-out nav_icon'></i> 
+                         <span class="nav_name">Come back </span> 
+                   </a>
+        </nav>
+    </div>
+    <!--Container Main start-->
+     <div class="container">
+        <main role="main" class="pb-3"
+            style="margin: 8rem auto;"
+        >
+        @RenderBody()
+        </main>
+        </div>
+    @* <div class="height-100 bg-light">
+        <h4>@RenderBody() </h4>
+    </div> *@
+    <!--Container Main end-->
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Admin - Edit User";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@* @model BlogApp.Models.Blog *@
+@model IEnumerable<BlogApp.Models.User>
+
+    <div class="jumbotron jumbotron-fluid mb-4"
+    style="margin-bottom: 55px !important;"
+>
+  <div class="container">
+    <h1 class="display-6 text-center">All Users </h1>
+  </div>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">FullName</th>
+      <th scope="col">Email</th>
+      <th scope="col">Role</th>
+      <th scope="col">CreatedAt </th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody
+  
+  >
+   @{int i = 0;}
+    @foreach (var item in Model)
+    {
+        <tr >
+            <td>
+                <img
+                style="width: 55px; height: 55px ;border-radius: 50%"
+                    src="data:image/png;base64,@Html.Raw(item.ProfileImage)" />
+            </td>
+            <th scope="row">@item.FullName</th>
+            <td>@item.Email</td>
+            <td>@item.Role</td>
+          
+            <td>@item.CreatedAt</td>
+            <td>
+                 <a href="#" class="btn btn-warning"> Edit  </a>
+            </td>
+            <td>
+                 <a href="#" class="btn btn-danger"> Delete  </a>
+            </td>
+
+        </tr>
+        
+    }
+
+  </tbody>
+</table>

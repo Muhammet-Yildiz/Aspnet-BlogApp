@@ -56,6 +56,9 @@ claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 claims.Add(new Claim(ClaimTypes.Name, user.FullName ?? string.Empty ));
 claims.Add(new Claim(ClaimTypes.Role, user.Role ));
 claims.Add(new Claim("Email", user.Email));
+// claims.Add(new Claim("ProfileImage", user.ProfileImage ?? string.Empty));
+
+// claims.Add(new Claim("ProfileImage", user.ProfileImage ?? string.Empty));
 
 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -118,7 +121,7 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
             return View(registerUser);
         }
 
-      [Authorize]
+       [Authorize]
         public IActionResult Profile()
         {
           Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -150,7 +153,7 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
 
         [Authorize]
         [HttpPost]
-        public IActionResult EditProfile(User user)
+        public async  Task<IActionResult> EditProfile(User user)
         {
           Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -159,6 +162,27 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
           if(userDb == null) {
             return RedirectToAction("NotFound", "Error");
           }
+
+          if(userDb.Email != user.Email) {
+            if(_context.Users.Any(u => u.Email == user.Email)) {
+              ModelState.AddModelError("Email", "Email already exists");
+              return View(user);
+            }
+          }
+
+   if(Request.Form.Files.Count > 0){
+         var image = Request.Form.Files[0];
+
+         if (image != null && image.Length > 0)
+        {
+           using (var stream = new MemoryStream())
+                        {
+             await image.CopyToAsync(stream);
+        userDb.ProfileImage = Convert.ToBase64String(stream.ToArray());
+                        }
+                    }
+
+                }
 
           userDb.FullName = user.FullName;
           userDb.Email = user.Email;

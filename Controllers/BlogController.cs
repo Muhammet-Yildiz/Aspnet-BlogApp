@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims ;
+
 namespace BlogApp.Controllers
 {
     public class BlogController : Controller
@@ -31,6 +33,10 @@ namespace BlogApp.Controllers
         [Authorize]
         public async Task<IActionResult> Create(Blog blog)
         {
+            // BURASI
+            // BURASI
+            // BURASI
+            // BURASI
             if (ModelState.IsValid)
             {   
 
@@ -48,6 +54,13 @@ namespace BlogApp.Controllers
 
                 }
 
+                
+      Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+          User user = _context.Users.SingleOrDefault(u => u.Id == userId);
+
+    blog.UserId = user.Id ;
+                
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Blog");
@@ -64,11 +77,24 @@ namespace BlogApp.Controllers
             {
                   return RedirectToAction("NotFound", "Error");
             }
+// var blog = _context.Blogs
+//     .Include(b => b.Comments)
+//     .FirstOrDefault(b => b.blogId == Id);
+            // var blog = await _context.Blogs
+            //     .Include(b => b.User)
+            //     .FirstOrDefaultAsync(m => m.BlogId == id);
+
+            // _context.Entry(blog).Collection(b => b.Comments).Query().Include(c => c.User).Load();
+
+
+
 
             var blog = await _context.Blogs
-                .Include(b => b.Comments)
+                .Include(b => b.Comments).Include(b => b.Comments).ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(m => m.BlogId == id);
-
+_context.Entry(blog)
+    .Reference(b => b.User)
+    .Load();
 
             if (blog == null)
             {
@@ -86,7 +112,16 @@ namespace BlogApp.Controllers
                return RedirectToAction("NotFound", "Error");
             }
 
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+          User user = _context.Users.SingleOrDefault(u => u.Id == userId);
             var blog = await _context.Blogs.FindAsync(id);
+
+            if(blog.UserId != user.Id){
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+
 
             if (blog == null)
             {
@@ -132,6 +167,13 @@ namespace BlogApp.Controllers
 
                         }
                     }
+                
+ Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+          User user = _context.Users.SingleOrDefault(u => u.Id == userId);
+
+    blog.UserId = user.Id ;
+
                      _context.Update(blog);
                       await _context.SaveChangesAsync();
 

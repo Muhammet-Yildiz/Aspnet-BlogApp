@@ -11,6 +11,7 @@ namespace BlogApp.Models
         // bu idyi eşsiz yapmak için guid kullanıyoruz
         public Guid Id { get; set; } 
 
+
         // null  olabılir '?'  
         [StringLength(50)]
         public string? FullName { get; set; }
@@ -32,6 +33,11 @@ namespace BlogApp.Models
         [StringLength(10)]
         [Required]
         public String Role { get; set; } = "user";
+
+
+        [DataType(DataType.Upload)]
+        public string? ProfileImage { get; set; }
+
 
     }
 }

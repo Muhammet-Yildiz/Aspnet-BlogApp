@@ -8,16 +8,33 @@
 <h2>@Model.Title</h2>
 <p>@Model.Content</p>
 
+Blogu yazan kullanıcı emaili  
+<p>@Model?.User?.Email</p>
+<img
+   style="width: 100px; height: 100px;border-radius: 50%;"
+      src="data:image/png;base64,@Html.Raw(Model?.User?.ProfileImage)" />
+<br><br>
+blog photo 
+<br>
   <img
    style="width: 100px; height: 100px;"
-      src="data:image/png;base64,@Html.Raw(Model.Image)" />
+      src="data:image/png;base64,@Html.Raw(Model?.Image)" />
 
 @* @Model.Comments.Count *@
+<br>
 
+Aktıf kullanıcı email 
+<br>
+ @User.FindFirst("Email")?.Value 
+<br>
+@if (User.FindFirst("Email")?.Value == Model?.User?.Email)
+{
 
-<a href="/Blog/Edit/@Model.BlogId" class="btn btn-warning"> Edit  </a>
+    <a href="/Blog/Edit/@Model.BlogId" class="btn btn-warning"> Edit  </a>
 
-<a href="/Blog/Delete/@Model.BlogId" class="btn btn-danger"> Delete  </a>
+    <a href="/Blog/Delete/@Model.BlogId" class="btn btn-danger"> Delete  </a>
+}
+
 
 
 COMMENT BLOG 
@@ -27,9 +44,12 @@ COMMENT BLOG
 {
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">@item.Author</h5>
+            <h5 class="card-title">@item.User.Email</h5>
+              <img
+   style="width: 30px; height: 30px;border-radius: 50%;"
+      src="data:image/png;base64,@Html.Raw(item.User.ProfileImage)" />
+            @* @item.User.Email *@
             <p class="card-text">@item.Content</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
     </div>
 }

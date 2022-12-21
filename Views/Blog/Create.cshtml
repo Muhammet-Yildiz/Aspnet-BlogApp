@@ -96,14 +96,25 @@
 
 
 <div class="row">
-    <div class="col-4 offset-4">
+    <div class="col-5 offset-4">
         <form  asp-action="Create"
         enctype="multipart/form-data"
         >
+        <h4 class="display-6  text-center pb-2  ">Add Story</h4>
+
+            <input type="hidden"
+            @* asp-for="@User.FindFirst("Id").Value" *@
+            >
             <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
 
             <div class="form-group mb-3">
-                <label asp-for="Title" class="form-label">Title</label>
+                <label asp-for="Title" class="form-label">Title
+                  @* @User.FindFirst("Id").Value *@
+      @* @User.FindFirst("Email").Value *@
+      @* ClaimTypes.NameIdentifier *@
+      @* @User.FindFirst().Value *@
+      @* @User.FindFirst().ToString() *@
+                </label>
                 <input asp-for="Title" class="form-control" placeholder="Title" />
                 <span asp-validation-for="Title" class="text-danger small"></span>
             </div>
@@ -111,27 +122,95 @@
             <div class="form-group mb-3">
                 <label asp-for="Content" class="form-label">Content</label>
 
-                <textarea type="text" class="form-control" placeholder="Content"   asp-for="Content"
+                <textarea type="text" class="form-control" placeholder="Content"  
+                
+                style="height: 150px ;resize: none;"
+                 asp-for="Content"
 
 ></textarea>
                 <span asp-validation-for="Content" class="text-danger small"></span>
             </div>
 
-              @* <div class="form-group mb-3">
-                <label asp-for="Content" class="form-label">Content</label>
-
-             
-            </div> *@
-                <div  class="form-group mb-3" >
+            @* <div  class="form-group mb-3" >
                 <label asp-for="Image" class="form-label">Image</label>
                   <input type="file" asp-for="Image" />
+              </div> *@
+
+
+      <div class="StoryImageField">
+                 <i class="fa-solid fa-upload"></i>
+                    <div class="txt">
+                   Include a high-quality image in your story to make it more inviting to readers.
+                    </div>
+                    <input
+                        name="image"
+                    type="file" asp-for="Image"
+                    />
                 </div>
+
 
 
             
             <div class="form-group d-grid mb-3">
-                <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Create Blog</button>
+                <button type="submit" class="btn btn-primary d-block">
+                Publish</button>
             </div>
         </form>
     </div>
 </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('.txt').text(fileName);
+        });
+    });
+
+</script>
+
+
+
+<style>
+
+
+.StoryImageField {
+    border: rgb(235, 235, 235) solid 1px;
+    width: 100%;
+    height: 240px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.StoryImageField i {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.StoryImageField .txt {
+    width: 350px;
+    height: auto;
+    margin-top: 14px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.StoryImageField input[type="file"] {
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+</style>
