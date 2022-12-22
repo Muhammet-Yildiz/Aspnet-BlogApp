@@ -57,5 +57,111 @@ namespace BlogApp.Controllers
         }
 
 
+       
+
+        [HttpGet]
+         [Authorize]
+
+        public async Task<IActionResult> Edit( int id){
+
+            System.Console.WriteLine("CommentController.Edit() id: " + id);
+            var comment = await _context.Comments.SingleOrDefaultAsync(m => m.CommentId == id);
+
+            // aktıf kullanıcıyı alıp kontrol edeleım
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if(!comment.UserId.Equals(userId)){
+
+                if(!User.IsInRole("admin")){
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+            }
+            
+            if (comment == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            var model = new UpdateCommentViewModel
+                {
+                    Content = comment.Content
+                };
+            
+           
+            return View(model);
+
+
+         
+        }
+
+        [HttpPost]
+         [Authorize]
+
+// belli alanları guncellemek ıcın bu view modellerı kullanmak karısıklıktan kurtarır
+        public async Task<IActionResult> Edit(int id ,UpdateCommentViewModel model){
+            System.Console.WriteLine("CommentController.Edit() id gedi : " + id);
+           
+        //    BURDA ERİŞİM KONTROLU YAPMAK LAZIM 
+
+            if (!ModelState.IsValid){
+                    return View(model);
+            }
+
+            var comment = await _context.Comments.SingleOrDefaultAsync(m => m.CommentId == id);
+
+             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if(!comment.UserId.Equals(userId) ){
+
+                    if(!User.IsInRole("admin")){
+                     return RedirectToAction("AccessDenied", "Home");
+                 }
+            }
+
+
+            comment.Content = model.Content;
+            await _context.SaveChangesAsync();
+
+            if(User.IsInRole("admin")) {
+                return RedirectToAction("Comments","Admin");
+            }
+
+            return RedirectToAction("Detail", "Blog", new { id = comment.BlogId });
+        }
+
+
+          [Authorize]
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("NotFound", "Error");
+
+            }
+
+            var comment = await _context.Comments
+                .SingleOrDefaultAsync(m => m.CommentId == id);
+           
+           
+            if (comment == null)
+            {
+                return RedirectToAction("NotFound", "Error");
+            }
+
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+             if(!comment.UserId.Equals(userId)  ){
+
+                    if(!User.IsInRole("admin")){
+                     return RedirectToAction("AccessDenied", "Home");
+                 }
+            }
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Detail", "Blog", new { id = comment.BlogId });
+
+        }
+
     }
 }

@@ -112,81 +112,80 @@ _context.Entry(blog)
                return RedirectToAction("NotFound", "Error");
             }
 
-            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+         Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-          User user = _context.Users.SingleOrDefault(u => u.Id == userId);
+
             var blog = await _context.Blogs.FindAsync(id);
 
-            if(blog.UserId != user.Id){
-                return RedirectToAction("AccessDenied", "Home");
+            if(!blog.UserId.Equals(userId)  ){
+
+                    if(!User.IsInRole("admin")){
+                     return RedirectToAction("AccessDenied", "Home");
+                 }
             }
-
-
 
             if (blog == null)
             {
                return RedirectToAction("NotFound", "Error");
             }
-            return View(blog);
+
+            
+            var model = new UpdateBlogViewModel{
+                Title = blog.Title,
+                Content = blog.Content,
+                Image = blog.Image
+            };
+
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-     
-
         [Authorize]
-        public async Task<IActionResult> Edit( int id , Blog blog)
+        public async Task<IActionResult> Edit( int id , UpdateBlogViewModel model)
         {
             // var target = await _context.Blogs.FindAsync(id);
 
-
-            if (id != blog.BlogId)
-            {
-                // return NotFound();
-               return RedirectToAction("NotFound", "Error");
-
+            if (!ModelState.IsValid){
+                    return View(model);
             }
-   
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            var blog = await _context.Blogs.FindAsync(id);
 
-                    if(Request.Form.Files.Count > 0){
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                        var image = Request.Form.Files[0];
+            if(!blog.UserId.Equals(userId)  ){
 
-                        if (image != null && image.Length > 0)
+                    if(!User.IsInRole("admin")){
+                     return RedirectToAction("AccessDenied", "Home");
+                 }
+            }
+
+
+            blog.Title = model.Title;
+            blog.Content = model.Content;
+
+
+             if(Request.Form.Files.Count > 0){
+
+                 var image = Request.Form.Files[0];
+
+                  if (image != null && image.Length > 0)
                         {
-                            using (var stream = new MemoryStream())
+                      using (var stream = new MemoryStream())
                             {
                                 await image.CopyToAsync(stream);
                                 blog.Image = Convert.ToBase64String(stream.ToArray());
-                            }
+                     }
 
-                        }
-                    }
-                
- Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-          User user = _context.Users.SingleOrDefault(u => u.Id == userId);
-
-    blog.UserId = user.Id ;
-
-                     _context.Update(blog);
-                      await _context.SaveChangesAsync();
-
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                     return RedirectToAction("NotFound", "Error");
-                }
-
-                return RedirectToAction("Index");
-
+                 }
             }
-            return View(blog);
+             await _context.SaveChangesAsync();
+
+            return RedirectToAction("Detail", "Blog", new { id = blog.BlogId });
+           
+
         }
 
         [Authorize]
@@ -194,38 +193,35 @@ _context.Entry(blog)
         {       
 
             var blog = await _context.Blogs.FindAsync(id);
-
             
             if (blog == null)
             {
                 return RedirectToAction("NotFound", "Error");
             }
 
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if(!blog.UserId.Equals(userId)  ){
+
+                    if(!User.IsInRole("admin")){
+                     return RedirectToAction("AccessDenied", "Home");
+                 }
+            }
+
             _context.Blogs.Remove(blog);
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
-
-            // return View(blog);
-        }
 
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> DeleteConfirm(int? id)
-        {
-            var blog = await _context.Blogs.FindAsync(id);
-
-            if (blog == null)
-            {
-                 return RedirectToAction("NotFound", "Error");
+            if(User.IsInRole("admin")){
+                return RedirectToAction("Blogs", "Admin");
             }
-
-            _context.Remove(blog);
-            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+
         }
+
+
+       
     }
 }

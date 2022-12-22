@@ -3,64 +3,209 @@
     @{
     ViewData["Title"] = "Detail Blog";
 }
+<link rel="stylesheet" href="~/css/blog-detail.css">
 
-<h2> id : @Model.BlogId</h2>
-<h2>@Model.Title</h2>
-<p>@Model.Content</p>
 
-Blogu yazan kullanıcı emaili  
-<p>@Model?.User?.Email</p>
-<img
-   style="width: 100px; height: 100px;border-radius: 50%;"
-      src="data:image/png;base64,@Html.Raw(Model?.User?.ProfileImage)" />
-<br><br>
-blog photo 
-<br>
+    <div class='Inclusive-detailStory-page'>
+
+              <div class="top_detail_wrapper">
+
+                <h5>@Model.Title</h5>
+
+                <div class='story-general-info'>
+
+                  <ul>
+                      <li class='story-author-info'>
+                                <img
+                        src="data:image/png;base64,@Html.Raw(Model?.User?.ProfileImage)" />
+
+                        <span class='story-author-username'>@Model.User.Email 
+                            
+                             </span>
+                      </li>
+                    <li class='story-createdAt'>
+                      @Model.CreatedDateTime
+                    </li>
+                    <b>-</b>
+
+                    <li class='story-comments-link'>
+                     
+                        <a href="#comments"
+                        >
+                            @Model.Comments.Count  comments 
+                            </a>
+
+                    </li>
+
+                  </ul>
+
+                    <div class="top_story_transactions">
+
+
+                            @if (User.FindFirst("Email")?.Value == Model?.User?.Email)
+{
+  <div class='editStoryLink' >
+    <a href="/Blog/Edit/@Model.BlogId" class="btn btn-outline-warning text-warning"> Edit  </a>
+    
+
+                      </div>
+                      <div class='deleteStoryLink' >
+    <a href="/Blog/Delete/@Model.BlogId" class="btn btn-outline-danger text-danger"
+    > Delete  </a>
+
+                      </div>
+
+}
+
+                    
+                    </div>
+                </div>
+
+              </div>
+
+              <div class='story-content' >
+
+                <div class="story-banner-img">
   <img
-   style="width: 100px; height: 100px;"
-      src="data:image/png;base64,@Html.Raw(Model?.Image)" />
+      src="data:image/png;base64,@Html.Raw(Model?.Image)"
+      alt="@Model.Title"
+       />
+                </div>
 
-@* @Model.Comments.Count *@
-<br>
+                <div class='content' >
+                    @Model.Content
+                </div>
 
-Aktıf kullanıcı email 
-<br>
- @User.FindFirst("Email")?.Value 
-<br>
-@if (User.FindFirst("Email")?.Value == Model?.User?.Email)
-{
+              </div>
+</div>
 
-    <a href="/Blog/Edit/@Model.BlogId" class="btn btn-warning"> Edit  </a>
+@* <div class="comment-top mt-4">
+    <h4>Bir yorum yaz  </h4>
+    <div class="comment-bottom">
+        <form asp-action="Create" asp-controller="Comment" method="post">
+            <input type="hidden" name="BlogId" value="@Model.BlogId" >
 
-    <a href="/Blog/Delete/@Model.BlogId" class="btn btn-danger"> Delete  </a>
-}
-
-
-
-COMMENT BLOG 
+            <textarea class="form-control" name="Content" placeholder="Yorum..." required=""></textarea>
+            <button type="submit" id="btnComment" class="btn btn-primary submit">Yorum Yap</button>
+        </form>
+ </div> *@
 
 
-@foreach (var item in Model.Comments.ToList()  )
-{
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">@item.User.Email</h5>
-              <img
-   style="width: 30px; height: 30px;border-radius: 50%;"
-      src="data:image/png;base64,@Html.Raw(item.User.ProfileImage)" />
-            @* @item.User.Email *@
-            <p class="card-text">@item.Content</p>
-        </div>
+@* --------------------------------------------- *@
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center " id="exampleModalToggleLabel">Add comment </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+        <form asp-action="Create" asp-controller="Comment" method="post">
+            <input type="hidden" name="BlogId" value="@Model.BlogId" >
+
+            <textarea class="form-control" name="Content" placeholder="Yorum..." required=""
+            style="height: 120px;resize: none;"
+            ></textarea>
+            <div class="d-flex flex-row-reverse">
+   <button type="submit" id="btnComment" 
+         data-bs-toggle="modal" data-bs-dismiss="modal"   class="btn btn-primary submit mt-4">Publish</button>
+</div>
+            
+        </form>
+      </div>
+    
     </div>
-}
+  </div>
+</div>
+
+
+
+
+@* ---------------------- *@
 
 
 
 
 
-@await Html.PartialAsync("~/Views/Comment/Create.cshtml")
 
 
 
 
+
+<link rel="stylesheet" href="~/css/comment.css">
+
+<div class="Ratings_title_number d-flex justify-content-between">
+
+    Bu ürün ile ilgili @Model.Comments.Count değerlendirme var.
+<a class="btn btn-link " data-bs-toggle="modal" href="#exampleModalToggle" role="button"
+style="text-decoration: none;color: #0063a5 !important; "
+>
+<i class="fa-solid fa-comment-plus"></i>
+Add Comment</a>
+
+@* <button type="button" class="btn btn-link text-danger">Link</button> *@
+</div>
+
+<div class="Comment_emp" id="comments">
+  @foreach (var comment in Model.Comments.ToList()  ){
+
+    <div class="comment_wrap">
+        <div class="figureRadio">
+                <img
+      src="data:image/png;base64,@Html.Raw(comment?.User?.ProfileImage)" />
+        </div>
+        <div class="comment_w" style="width: 500px;">
+            <div class="d-flex justify-content-between ;align-items-center">
+              <div class="d-flex align-items-center">
+
+                <div class="comment_author">
+                    @comment.User.Email
+                </div>
+                <span 
+                style="margin: 0 10px ;"
+                >|</span>
+
+  <div style="font-size: 14px ;">
+                   @comment.CreatedDateTime
+                </div>
+              </div>
+            @if (User.FindFirst("Email")?.Value == comment?.User?.Email)
+            {
+                <div class="d-flex justify-content-between ; align-items-center" >
+
+                <div style="margin-right: 10px ;" class="comment_link" >
+                   <a href="/Comment/Edit/@comment.CommentId" class="btn btn-outline-warning text-warning"> 
+                   <i class="fa-solid fa-pen-to-square"></i>
+                     </a>
+                </div>
+                  <div class="comment_link">
+                   <a href="/Comment/Delete/@comment.CommentId" class="btn btn-outline-danger text-danger"> <i class="fa-sharp fa-solid fa-trash"></i>  </a>
+                </div>
+             </div>
+
+            }
+
+              
+
+            </div>
+
+            <div class="sec2">
+                <div class="comment_content">
+                    @comment.Content
+
+                </div>
+              
+            </div>
+
+
+        </div>
+        <hr>
+
+    </div>
+
+
+  }
+</div> 
 

@@ -48,11 +48,63 @@ namespace BlogApp.Controllers
 
           public IActionResult Blogs()  {
 
-    // var blogs = _context.Blogs.ToList();
-        var blogs = _context.Blogs.Include(b => b.User).ToList();
+            // var blogs = _context.Blogs.ToList();
+            var blogs = _context.Blogs.Include(b => b.User).ToList();
             return View(blogs);
            
         }
+
+        [HttpGet]
+         public async  Task<IActionResult> EditUser(Guid? id)
+        {
+                if (id == null){
+                return RedirectToAction("NotFound", "Error");
+
+                }
+
+               var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
+
+                if (user == null){
+                     return RedirectToAction("NotFound", "Error");
+
+                }
+
+            var model = new UpdateUserViewModel {
+                Email = user.Email,
+                Role = user.Role,
+                FullName = user.FullName,
+                ProfileImage = user.ProfileImage
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> EditUser(Guid id, UpdateUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
+System.Console.WriteLine("AdminController.EditUser() user: " + user.FullName);
+                if (user == null)
+                {
+                    return RedirectToAction("NotFound", "Error");
+                }
+
+                user.Email = model.Email;
+                user.Role = model.Role;
+                user.FullName = model.FullName;
+                // user.ProfileImage = model.ProfileImage;
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Users");
+            }
+
+            return View(model);
+        }
+
 
     }
 }

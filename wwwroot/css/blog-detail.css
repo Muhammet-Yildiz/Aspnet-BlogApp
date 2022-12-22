@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300&family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300&family=Roboto:wght@500&family=Secular+One&display=swap');
+.Inclusive-detailStory-page {
+    width: 1150px;
+    margin: 2rem auto 4rem;
+    position: relative;
+}
+
+@media only screen and (max-width: 1150px) {
+    .Inclusive-detailStory-page {
+        width: 100%;
+        padding: 0 16px;
+    }
+}
+
+.top_detail_wrapper {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.top_detail_wrapper h5 {
+    font-size: 2.4rem;
+    font-weight: bolder;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+    padding-left: 18px;
+    font-family: 'Londrina Solid', cursive;
+}
+
+.story-general-info {
+    width: 100%;
+    height: 65px;
+    background-color: #f4f7fd;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 18px;
+    position: relative;
+}
+
+.story-general-info ul {
+    padding: 0;
+    margin: 0;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.story-general-info ul li {
+    list-style: none;
+}
+
+.story-general-info ul b {
+    margin: 0 6px;
+    font-weight: normal !important;
+}
+
+li.story-author-info {
+    display: flex;
+    align-items: center;
+    margin-right: 11px;
+}
+
+li.story-author-info img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+li.story-author-info span {
+    font-family: 'Mukta', sans-serif;
+    font-weight: bold;
+    color: #0063a5;
+    margin: 0 6px;
+}
+
+li.story-createdAt,
+li.story-comments-link a {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: rgb(121, 121, 121);
+    font-size: 0.8rem;
+    font-weight: 560;
+}
+
+.Inclusive-detailStory-page .story-content {
+    height: auto;
+    width: 100%;
+    margin-top: 1.8rem;
+    font-family: 'IBM Plex Serif', sans-serif;
+    font-size: 1.2rem;
+    position: relative;
+    line-height: 32px;
+}
+
+.story-banner-img {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.story-banner-img img {
+    width: 97%;
+    height: 450px;
+    margin: 1rem 0;
+}
+
+.story-content a {
+    font-weight: bold;
+    color: black;
+    padding: 0 4px;
+}
+
+.story-content h1,
+.story-content h2,
+.story-content h3 {
+    font-family: 'Roboto', sans-serif;
+    margin: 2rem 0;
+}
+
+.story-content h2 {
+    font-size: 1.7rem;
+}
+
+.story-content blockquote {
+    border-left: 4px solid black;
+    padding-left: 1rem;
+    font-size: 1.2rem;
+}
+
+.story-content ul {
+    margin-bottom: 24px;
+}
+
+.story-content ul li {
+    margin: 10px 0;
+}
+
+.story-content .content {
+    width: 97%;
+    margin: 0 auto;
+    line-height: 2.5rem;
+}
+
+.BsThreeDots_opt:hover .delete_or_edit_story {
+    display: flex;
+}
+
+.delete_or_edit_story {
+    cursor: pointer;
+    position: absolute;
+    top: -50px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(204, 204, 204, 0.6);
+    right: 0px;
+    border-radius: 6px;
+    padding: 0.6rem 10px 0;
+    font-size: 0.7rem;
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.delete_or_edit_story p {
+    color: black;
+    font-family: 'Inter';
+    font-weight: bold;
+    padding: 0;
+    text-decoration: none;
+}
+
+.delete_or_edit_story a {
+    text-decoration: none;
+}
+
+.top_story_transactions {
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+}
+
+.top_story_transactions a {
+    margin-right: 20px;
+    color: black;
+}
+
+.top_story_transactions span {
+    color: #0063a5;
+    cursor: pointer;
+}
+
+.deleteStoryLink a:hover,
+.editStoryLink a:hover {
+    color: white !important;
+}
+
+.comment_link a:hover i {
+    color: white !important;
+}

@@ -1,14 +1,21 @@
-@model BlogApp.Models.User
+@model BlogApp.Models.UpdateUserViewModel
 
-@{
-    ViewData["Title"] = "Edit Profile";
-}
+
+@* 
+@Model.Email
+@Model.FullName
+@Model.Role *@
+@* @Model.ProfileImage *@
+
+
+<link rel="stylesheet" href="~/css/edit-profile.css">
+
 
 <div class="row">
     <div class="col-5 offset-4">
         <form  
-        asp-action="EditProfile"
-        asp-controller="Account"
+        asp-action="EditUser"
+        asp-controller="Admin"
         enctype="multipart/form-data"
         >
                 <h4 class="display-6  text-center pb-2  ">Edit Profile</h4>
@@ -31,8 +38,8 @@
             <div class="form-group mb-3">
                 <label asp-for="Email" class="form-label">Email</label>
                
-<input asp-for="Email" class="form-control" placeholder="Email" 
-               value="@Model.Email"
+                    <input asp-for="Email" class="form-control" placeholder="Email" 
+                     value="@Model.Email"
                 />
                 
                 <span 
@@ -88,6 +95,19 @@
 
                 </div>
 
+ <div class="form-group" style="margin :1rem 0 ;">
+        <label asp-for="Role" class="control-label mb-2"></label>
+        <div clas="d-flex flex-direction-row">
+            <div class="form-check">
+                <input asp-for="Role" type="radio" value="admin" class="form-check-input" />
+                <label class="form-check-label">Admin</label>
+            </div>
+            <div class="form-check">
+                <input asp-for="Role" type="radio" value="user" class="form-check-input" />
+                <label class="form-check-label">User</label>
+            </div>
+        </div>
+    </div>
 
             
             <div class="form-group d-grid mb-3">
@@ -108,5 +128,3 @@
     });
 
 </script>
-
-<link rel="stylesheet" href="~/css/edit-profile.css">

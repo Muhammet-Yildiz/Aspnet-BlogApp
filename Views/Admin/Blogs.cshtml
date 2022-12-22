@@ -15,7 +15,7 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col"></th>
       <th scope="col">Author</th>
       <th scope="col">Title</th>
       <th scope="col">Content</th>
@@ -33,16 +33,17 @@
     {
         <tr
         >
+            <td>
+
+                <img
+               style="width: 85px; height: 85px"
+                src="data:image/png;base64,@Html.Raw(item.Image)" />
+            </td>
             <th scope="row">@item.BlogId</th>
             <th scope="row">@item.User.Email</th>
             <td>@item.Title</td>
-            <td>@item.Content</td>
-            <td>
-  <img
-   style="width: 55px; height: 55px"
-      src="data:image/png;base64,@Html.Raw(item.User.ProfileImage)" />
-
-            </td>
+            <td
+            >@item.Content   </td>
             <td>@item.CreatedDateTime</td>
 
             <td>

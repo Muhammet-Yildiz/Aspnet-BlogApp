@@ -170,7 +170,7 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
             }
           }
 
-   if(Request.Form.Files.Count > 0){
+         if(Request.Form.Files.Count > 0){
          var image = Request.Form.Files[0];
 
          if (image != null && image.Length > 0)
@@ -190,11 +190,6 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
           _context.SaveChanges();
 
           return RedirectToAction("Profile", "Account");
-          
-          
-          // Console.WriteLine("EditProfile Post", user.FullName, user.Email);
-          // Console.WriteLine("EMAİL", user.Email);
-          
           
 
         }
