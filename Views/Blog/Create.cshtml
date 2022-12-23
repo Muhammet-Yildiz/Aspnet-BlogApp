@@ -1,94 +1,3 @@
-@* <form method="post" action="/api/Provider" data-sectionid="1" asp-action="create">
-  <p>Tell us about yourself.</p>
-  <p class="mb-0 mt-2">Yes / no (radio buttons)</p>
-  <div class="form-check">
-    <input class="form-check-input" type="radio" id="51e14e20-5a91-44b9-83a8-dca221d434e6" name="name" value="true" data-questionid="6" >
-    <label class="form-check-label" for="51e14e20-5a91-44b9-83a8-dca221d434e6">Yes</label>
-  </div>
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="radio" id="51e14e20-5a91-44b9-83a8-dca221d434e6" name="51e14e20-5a91-44b9-83a8-dca221d434e6" value="false" data-questionid="6">
-    <label class="form-check-label" for="51e14e20-5a91-44b9-83a8-dca221d434e6">No</label>
-  </div>
-
-  <div class="mb-3">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="d9480b44-7916-4228-8c23-aa20a9efef5b" value="1" data-questionid="3">
-      <label class="form-check-label" for="d9480b44-7916-4228-8c23-aa20a9efef5b">Choice 1</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="d9480b44-7916-4228-8c23-aa20a9efef5b" value="2" data-questionid="3">
-      <label class="form-check-label" for="d9480b44-7916-4228-8c23-aa20a9efef5b">Choice 2</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="d9480b44-7916-4228-8c23-aa20a9efef5b" value="3" data-questionid="3">
-      <label class="form-check-label" for="d9480b44-7916-4228-8c23-aa20a9efef5b">Choice 3</label>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="61336a34-9e03-4842-a843-741344fe9dbb">Name</label>
-    <input type="text" class="form-control" id="61336a34-9e03-4842-a843-741344fe9dbb" value="" data-questionid="1">
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="c9653cd7-059f-4273-866b-de502dac6ec9">Surname</label>
-    <textarea class="form-control" id="c9653cd7-059f-4273-866b-de502dac6ec9" data-questionid="2"></textarea>
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="00529ca6-07ab-4df8-ac55-6376d2e9fe4d">Options</label>
-    <select class="form-control" id="00529ca6-07ab-4df8-ac55-6376d2e9fe4d" data-questionid="4">
-      <option value="">Pick one</option>
-      <option value="Option 1">Option 1</option>
-      <option value="Option 2">Option 2</option>
-      <option value="Option 3">Option 3</option>
-    </select>
-  </div>
-
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="checkbox" id="ia93e83bc136b43eda28c47f54716b6f2_0" value="7" data-questionid="9" onchange="showComments('da93e83bc136b43eda28c47f54716b6f2_0')">
-    <label class="form-check-label" for="ia93e83bc136b43eda28c47f54716b6f2_0">Test 1</label>
-    <div class="input d-none da93e83bc136b43eda28c47f54716b6f2_0">
-      <textarea class="form-control" data-questionid="9"></textarea>
-      <small class="text-muted">Fee free to add any details.</small>
-    </div>
-  </div>
-
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="checkbox" id="ia93e83bc136b43eda28c47f54716b6f2_1" value="8" data-questionid="9" onchange="showComments('da93e83bc136b43eda28c47f54716b6f2_1')">
-    <label class="form-check-label" for="ia93e83bc136b43eda28c47f54716b6f2_1">Test 2</label>
-    <div class="input d-none da93e83bc136b43eda28c47f54716b6f2_1">
-      <textarea class="form-control" data-questionid="9"></textarea>
-      <small class="text-muted">Fee free to add any details.</small>
-    </div>
-  </div>
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="checkbox" id="ia93e83bc136b43eda28c47f54716b6f2_2" value="9" data-questionid="9" onchange="showComments('da93e83bc136b43eda28c47f54716b6f2_2')">
-    <label class="form-check-label" for="ia93e83bc136b43eda28c47f54716b6f2_2">Test 3</label>
-    <div class="input d-none da93e83bc136b43eda28c47f54716b6f2_2">
-      <textarea class="form-control" data-questionid="9"></textarea>
-      <small class="text-muted">Fee free to add any details.</small>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="1f751be5-09f7-464f-99c1-c2dd4dfc6c8c">Test</label>
-    <input type="date" class="form-control" id="1f751be5-09f7-464f-99c1-c2dd4dfc6c8c" value="" data-questionid="10">
-  </div>
-
-  <div class="form-group mb-3">
-    <p class="mb-0 mt-2">File <i data-questionid="5" class="uploadSpinner fas fa-circle-notch fa-spin"></i></p>
-    <input type="file" id="5e8fa2b6-cc20-4fcb-b6d1-6e4970463394" data-questionid="5" data-sectionid="1">
-    <div class="filesList mt-3" data-questionid="5" data-sectionid="1">
-      <h4>Files:</h4>
-      <ul>
-
-      </ul>
-    </div>
-
-  </div>
-</form> *@
-
 @model BlogApp.Models.Blog
 @{
     ViewData["Title"] = "Create Blog";
@@ -102,18 +11,11 @@
         >
         <h4 class="display-6  text-center pb-2  ">Add Story</h4>
 
-            <input type="hidden"
-            @* asp-for="@User.FindFirst("Id").Value" *@
-            >
+            <input type="hidden" >
             <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
 
             <div class="form-group mb-3">
                 <label asp-for="Title" class="form-label">Title
-                  @* @User.FindFirst("Id").Value *@
-      @* @User.FindFirst("Email").Value *@
-      @* ClaimTypes.NameIdentifier *@
-      @* @User.FindFirst().Value *@
-      @* @User.FindFirst().ToString() *@
                 </label>
                 <input asp-for="Title" class="form-control" placeholder="Title" />
                 <span asp-validation-for="Title" class="text-danger small"></span>
@@ -126,16 +28,9 @@
                 
                 style="height: 150px ;resize: none;"
                  asp-for="Content"
-
-></textarea>
+              ></textarea>
                 <span asp-validation-for="Content" class="text-danger small"></span>
             </div>
-
-            @* <div  class="form-group mb-3" >
-                <label asp-for="Image" class="form-label">Image</label>
-                  <input type="file" asp-for="Image" />
-              </div> *@
-
 
       <div class="StoryImageField">
                  <i class="fa-solid fa-upload"></i>
@@ -147,8 +42,6 @@
                     type="file" asp-for="Image"
                     />
                 </div>
-
-
 
             
             <div class="form-group d-grid mb-3">
@@ -173,44 +66,4 @@
 </script>
 
 
-
-<style>
-
-
-.StoryImageField {
-    border: rgb(235, 235, 235) solid 1px;
-    width: 100%;
-    height: 240px;
-    border-radius: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    cursor: pointer;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    position: relative;
-}
-
-.StoryImageField i {
-    font-size: 1.4rem;
-    color: rgba(0, 0, 0, 0.7);
-}
-
-.StoryImageField .txt {
-    width: 350px;
-    height: auto;
-    margin-top: 14px;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.7);
-}
-
-.StoryImageField input[type="file"] {
-    width: 100%;
-    height: 200px;
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-
-</style>
+<link rel="stylesheet" href="~/css/blog-create.css">

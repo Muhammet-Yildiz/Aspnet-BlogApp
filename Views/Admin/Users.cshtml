@@ -2,7 +2,6 @@
     ViewData["Title"] = "Admin - Edit User";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@* @model BlogApp.Models.Blog *@
 @model IEnumerable<BlogApp.Models.User>
 
     <div class="jumbotron jumbotron-fluid mb-4"
@@ -45,12 +44,10 @@
                  <a href="/Admin/EditUser/@item.Id" class="btn btn-warning"> Edit </a>
             </td>
             <td>
-                 <a href="#" class="btn btn-danger"> Delete  </a>
+                 <a href="/Admin/DeleteUser/@item.Id" class="btn btn-danger"> Delete  </a>
             </td>
 
         </tr>
-        
     }
-
   </tbody>
 </table>

@@ -19,10 +19,7 @@ namespace BlogApp.Models
          [Display(Name = "Image")]
         [DataType(DataType.Upload)]
         public string? Image { get; set; }
-
         public List<Comment>? Comments { get; set; }
-
-
         public Guid? UserId { get; set; }
 
         public User? User { get; set; }

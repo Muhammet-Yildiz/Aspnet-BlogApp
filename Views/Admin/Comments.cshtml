@@ -2,7 +2,6 @@
     ViewData["Title"] = "Admin - Edit Comment";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@* @model BlogApp.Models.Blog *@
 @model IEnumerable<BlogApp.Models.Comment>
 
 <div class="jumbotron jumbotron-fluid mb-4"
@@ -23,7 +22,6 @@
       <th scope="col">CreatedDateTime</th>
       <th scope="col"></th>
       <th scope="col"></th>
-      @* <th scope="col">Comment Count</th> *@
     </tr>
   </thead>
   <tbody
@@ -42,16 +40,14 @@
 
             <td>
                 
-    <a href="/Comment/Edit/@item.CommentId" class="btn btn-warning"> Edit  </a>
+                <a href="/Comment/Edit/@item.CommentId" class="btn btn-warning"> Edit  </a>
 
             </td>
             <td>
-    <a href="#" class="btn btn-danger"> Delete  </a>
-
+                <a href="#" class="btn btn-danger"> Delete  </a>
             </td>
 
         </tr>
-        
     }
 
   </tbody>

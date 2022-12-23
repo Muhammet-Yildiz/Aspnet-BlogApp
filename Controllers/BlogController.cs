@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims ;
+using System.Security.Claims;
 
 namespace BlogApp.Controllers
 {
@@ -15,13 +15,12 @@ namespace BlogApp.Controllers
             _context = context;
         }
 
-        // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
             var blogs = _context.Blogs;
             return View(await blogs.ToListAsync());
         }
-       
+
         [Authorize]
         public IActionResult Create()
         {
@@ -33,14 +32,11 @@ namespace BlogApp.Controllers
         [Authorize]
         public async Task<IActionResult> Create(Blog blog)
         {
-            // BURASI
-            // BURASI
-            // BURASI
-            // BURASI
             if (ModelState.IsValid)
-            {   
+            {
 
-                if(Request.Form.Files.Count > 0){
+                if (Request.Form.Files.Count > 0)
+                {
                     var image = Request.Form.Files[0];
 
                     if (image != null && image.Length > 0)
@@ -54,13 +50,13 @@ namespace BlogApp.Controllers
 
                 }
 
-                
-      Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-          User user = _context.Users.SingleOrDefault(u => u.Id == userId);
+                Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-    blog.UserId = user.Id ;
-                
+                User user = _context.Users.SingleOrDefault(u => u.Id == userId);
+
+                blog.UserId = user.Id;
+
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Blog");
@@ -71,34 +67,20 @@ namespace BlogApp.Controllers
 
         public async Task<IActionResult> Detail(int? id)
         {
-            // burda not found sayfası eklenmelı 
-
             if (id == null)
             {
-                  return RedirectToAction("NotFound", "Error");
+                return RedirectToAction("NotFound", "Error");
             }
-// var blog = _context.Blogs
-//     .Include(b => b.Comments)
-//     .FirstOrDefault(b => b.blogId == Id);
-            // var blog = await _context.Blogs
-            //     .Include(b => b.User)
-            //     .FirstOrDefaultAsync(m => m.BlogId == id);
-
-            // _context.Entry(blog).Collection(b => b.Comments).Query().Include(c => c.User).Load();
-
-
-
-
             var blog = await _context.Blogs
                 .Include(b => b.Comments).Include(b => b.Comments).ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(m => m.BlogId == id);
-_context.Entry(blog)
-    .Reference(b => b.User)
-    .Load();
+            _context.Entry(blog)
+                .Reference(b => b.User)
+                .Load();
 
             if (blog == null)
             {
-             return RedirectToAction("NotFound", "Error");
+                return RedirectToAction("NotFound", "Error");
             }
 
             return View(blog);
@@ -109,28 +91,30 @@ _context.Entry(blog)
         {
             if (id == null)
             {
-               return RedirectToAction("NotFound", "Error");
+                return RedirectToAction("NotFound", "Error");
             }
 
-         Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             var blog = await _context.Blogs.FindAsync(id);
 
-            if(!blog.UserId.Equals(userId)  ){
+            if (!blog.UserId.Equals(userId))
+            {
 
-                    if(!User.IsInRole("admin")){
-                     return RedirectToAction("AccessDenied", "Home");
-                 }
+                if (!User.IsInRole("admin"))
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
             }
 
             if (blog == null)
             {
-               return RedirectToAction("NotFound", "Error");
+                return RedirectToAction("NotFound", "Error");
             }
 
-            
-            var model = new UpdateBlogViewModel{
+
+            var model = new UpdateBlogViewModel
+            {
                 Title = blog.Title,
                 Content = blog.Content,
                 Image = blog.Image
@@ -143,23 +127,25 @@ _context.Entry(blog)
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit( int id , UpdateBlogViewModel model)
+        public async Task<IActionResult> Edit(int id, UpdateBlogViewModel model)
         {
-            // var target = await _context.Blogs.FindAsync(id);
 
-            if (!ModelState.IsValid){
-                    return View(model);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
             }
 
             var blog = await _context.Blogs.FindAsync(id);
 
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if(!blog.UserId.Equals(userId)  ){
+            if (!blog.UserId.Equals(userId))
+            {
 
-                    if(!User.IsInRole("admin")){
-                     return RedirectToAction("AccessDenied", "Home");
-                 }
+                if (!User.IsInRole("admin"))
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
             }
 
 
@@ -167,33 +153,34 @@ _context.Entry(blog)
             blog.Content = model.Content;
 
 
-             if(Request.Form.Files.Count > 0){
+            if (Request.Form.Files.Count > 0)
+            {
 
-                 var image = Request.Form.Files[0];
+                var image = Request.Form.Files[0];
 
-                  if (image != null && image.Length > 0)
-                        {
-                      using (var stream = new MemoryStream())
-                            {
-                                await image.CopyToAsync(stream);
-                                blog.Image = Convert.ToBase64String(stream.ToArray());
-                     }
+                if (image != null && image.Length > 0)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        await image.CopyToAsync(stream);
+                        blog.Image = Convert.ToBase64String(stream.ToArray());
+                    }
 
-                 }
+                }
             }
-             await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Detail", "Blog", new { id = blog.BlogId });
-           
+
 
         }
 
         [Authorize]
         public async Task<IActionResult> Delete(int id)
-        {       
+        {
 
             var blog = await _context.Blogs.FindAsync(id);
-            
+
             if (blog == null)
             {
                 return RedirectToAction("NotFound", "Error");
@@ -201,27 +188,26 @@ _context.Entry(blog)
 
             var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if(!blog.UserId.Equals(userId)  ){
+            if (!blog.UserId.Equals(userId))
+            {
 
-                    if(!User.IsInRole("admin")){
-                     return RedirectToAction("AccessDenied", "Home");
-                 }
+                if (!User.IsInRole("admin"))
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
             }
 
             _context.Blogs.Remove(blog);
 
             await _context.SaveChangesAsync();
 
-
-
-            if(User.IsInRole("admin")){
+            if (User.IsInRole("admin"))
+            {
                 return RedirectToAction("Blogs", "Admin");
             }
             return RedirectToAction("Index");
 
         }
 
-
-       
     }
 }

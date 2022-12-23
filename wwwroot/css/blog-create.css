@@ -1,0 +1,35 @@
+.StoryImageField {
+    border: rgb(235, 235, 235) solid 1px;
+    width: 100%;
+    height: 240px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.StoryImageField i {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.StoryImageField .txt {
+    width: 350px;
+    height: auto;
+    margin-top: 14px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.StoryImageField input[type="file"] {
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}

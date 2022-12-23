@@ -3,9 +3,6 @@
     @{
     ViewData["Title"] = "Detail Blog";
 }
-<link rel="stylesheet" href="~/css/blog-detail.css">
-
-
     <div class='Inclusive-detailStory-page'>
 
               <div class="top_detail_wrapper">
@@ -16,8 +13,15 @@
 
                   <ul>
                       <li class='story-author-info'>
-                                <img
+                      @if (Model.User.ProfileImage != null)
+                      {
+                          <img
                         src="data:image/png;base64,@Html.Raw(Model?.User?.ProfileImage)" />
+                      }
+                      else {
+                          <img src="~/images/user.png" />
+                      }
+                    
 
                         <span class='story-author-username'>@Model.User.Email 
                             
@@ -42,20 +46,20 @@
                     <div class="top_story_transactions">
 
 
-                            @if (User.FindFirst("Email")?.Value == Model?.User?.Email)
-{
-  <div class='editStoryLink' >
-    <a href="/Blog/Edit/@Model.BlogId" class="btn btn-outline-warning text-warning"> Edit  </a>
-    
+                     @if (User.FindFirst("Email")?.Value == Model?.User?.Email)
+                              {
+                                <div class='editStoryLink' >
+                                  <a href="/Blog/Edit/@Model.BlogId" class="btn btn-outline-warning text-warning"> Edit  </a>
+                                  
 
-                      </div>
-                      <div class='deleteStoryLink' >
-    <a href="/Blog/Delete/@Model.BlogId" class="btn btn-outline-danger text-danger"
-    > Delete  </a>
+                                   </div>
+                                   <div class='deleteStoryLink' >
+                                  <a href="/Blog/Delete/@Model.BlogId" class="btn btn-outline-danger text-danger"
+                                  > Delete  </a>
 
-                      </div>
+                                   </div>
 
-}
+                              }
 
                     
                     </div>
@@ -66,10 +70,18 @@
               <div class='story-content' >
 
                 <div class="story-banner-img">
-  <img
-      src="data:image/png;base64,@Html.Raw(Model?.Image)"
-      alt="@Model.Title"
-       />
+
+                  @if(Model.Image != null) {
+
+                  <img
+                      src="data:image/png;base64,@Html.Raw(Model?.Image)"
+                      alt="@Model.Title"
+                      />
+                  }
+                  else {
+                      <img src="~/images/default.jpg" alt="@Model.Title" />
+                  }
+
                 </div>
 
                 <div class='content' >
@@ -78,20 +90,6 @@
 
               </div>
 </div>
-
-@* <div class="comment-top mt-4">
-    <h4>Bir yorum yaz  </h4>
-    <div class="comment-bottom">
-        <form asp-action="Create" asp-controller="Comment" method="post">
-            <input type="hidden" name="BlogId" value="@Model.BlogId" >
-
-            <textarea class="form-control" name="Content" placeholder="Yorum..." required=""></textarea>
-            <button type="submit" id="btnComment" class="btn btn-primary submit">Yorum Yap</button>
-        </form>
- </div> *@
-
-
-@* --------------------------------------------- *@
 
 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
@@ -122,21 +120,9 @@
 
 
 
-
-@* ---------------------- *@
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="~/css/comment.css">
-
-<div class="Ratings_title_number d-flex justify-content-between">
+<div class="Ratings_title_number d-flex justify-content-between"
+style="font-family: Mukta;"
+>
 
     Bu ürün ile ilgili @Model.Comments.Count değerlendirme var.
 <a class="btn btn-link " data-bs-toggle="modal" href="#exampleModalToggle" role="button"
@@ -145,7 +131,6 @@ style="text-decoration: none;color: #0063a5 !important; "
 <i class="fa-solid fa-comment-plus"></i>
 Add Comment</a>
 
-@* <button type="button" class="btn btn-link text-danger">Link</button> *@
 </div>
 
 <div class="Comment_emp" id="comments">
@@ -153,8 +138,16 @@ Add Comment</a>
 
     <div class="comment_wrap">
         <div class="figureRadio">
-                <img
+          @if (comment.User.ProfileImage != null)
+          {
+              <img
       src="data:image/png;base64,@Html.Raw(comment?.User?.ProfileImage)" />
+          }
+          else {
+              <img src="~/images/user.png" />
+          }
+              
+
         </div>
         <div class="comment_w" style="width: 500px;">
             <div class="d-flex justify-content-between ;align-items-center">
@@ -188,7 +181,6 @@ Add Comment</a>
             }
 
               
-
             </div>
 
             <div class="sec2">
@@ -199,13 +191,13 @@ Add Comment</a>
               
             </div>
 
-
         </div>
         <hr>
 
     </div>
 
-
   }
 </div> 
 
+<link rel="stylesheet" href="~/css/blog-detail.css">
+<link rel="stylesheet" href="~/css/comment.css">

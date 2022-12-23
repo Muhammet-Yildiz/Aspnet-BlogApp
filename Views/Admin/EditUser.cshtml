@@ -1,15 +1,7 @@
 @model BlogApp.Models.UpdateUserViewModel
 
 
-@* 
-@Model.Email
-@Model.FullName
-@Model.Role *@
-@* @Model.ProfileImage *@
-
-
 <link rel="stylesheet" href="~/css/edit-profile.css">
-
 
 <div class="row">
     <div class="col-5 offset-4">
@@ -49,26 +41,20 @@
 
 
 
-   <div class="profile-ımg-upld-wrapper">
+             <div class="profile-ımg-upld-wrapper">
 
-                    <div class="ProfilePhotoField">
-                        <i class="fa-solid fa-user"></i>
-                        <div class="txt">
+                 <div class="ProfilePhotoField">
+                       <i class="fa-solid fa-user"></i>
+                       <div class="txt">
 
-                            <div>
-                                <i class="fa-solid fa-upload"></i>
-                              <span>
-                              Change Profile Photo
+                   <div>
+                         <i class="fa-solid fa-upload"></i>
+                          <span>
+                               Change Profile Photo
 
-                              </span>
-                            </div>
-                         
-                        </div>
-                        @* <input
-                             name="photo"
-                            type="file"
-
-                        /> *@
+                           </span>
+                   </div>
+                </div>
                           <input type="file" asp-for="ProfileImage"
                     value="data:image/png;base64,@Html.Raw(Model.ProfileImage)"
                    />
@@ -95,19 +81,19 @@
 
                 </div>
 
- <div class="form-group" style="margin :1rem 0 ;">
-        <label asp-for="Role" class="control-label mb-2"></label>
-        <div clas="d-flex flex-direction-row">
-            <div class="form-check">
-                <input asp-for="Role" type="radio" value="admin" class="form-check-input" />
-                <label class="form-check-label">Admin</label>
+        <div class="form-group" style="margin :1rem 0 ;">
+                <label asp-for="Role" class="control-label mb-2"></label>
+                <div clas="d-flex flex-direction-row">
+                    <div class="form-check">
+                        <input asp-for="Role" type="radio" value="admin" class="form-check-input" />
+                        <label class="form-check-label">Admin</label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Role" type="radio" value="user" class="form-check-input" />
+                        <label class="form-check-label">User</label>
+                    </div>
+                </div>
             </div>
-            <div class="form-check">
-                <input asp-for="Role" type="radio" value="user" class="form-check-input" />
-                <label class="form-check-label">User</label>
-            </div>
-        </div>
-    </div>
 
             
             <div class="form-group d-grid mb-3">

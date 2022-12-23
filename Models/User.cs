@@ -8,11 +8,8 @@ namespace BlogApp.Models
     public class User
     {
         [Key]
-        // bu idyi eşsiz yapmak için guid kullanıyoruz
         public Guid Id { get; set; } 
 
-
-        // null  olabılir '?'  
         [StringLength(50)]
         public string? FullName { get; set; }
 
@@ -22,18 +19,15 @@ namespace BlogApp.Models
 
         [Required]
         [StringLength(100)]
-        // şifreyi hashleyip veritabanına kaydederken uzayacak ondan 100 karakter ayırdık
         public string Password { get; set; }
 
         public bool Locked { get; set; } = false;
         
-        // public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
 
         [StringLength(10)]
         [Required]
         public String Role { get; set; } = "user";
-
 
         [DataType(DataType.Upload)]
         public string? ProfileImage { get; set; }

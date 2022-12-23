@@ -2,7 +2,6 @@
     ViewData["Title"] = "Admin";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@* @model BlogApp.Models.Blog *@
 @model IEnumerable<BlogApp.Models.Blog>
 
     <div class="jumbotron jumbotron-fluid mb-4"
@@ -23,7 +22,6 @@
       <th scope="col">CreatedDateTime</th>
       <th scope="col"></th>
       <th scope="col"></th>
-      @* <th scope="col">Comment Count</th> *@
     </tr>
   </thead>
   <tbody
@@ -31,10 +29,8 @@
   >
     @foreach (var item in Model)
     {
-        <tr
-        >
+        <tr>
             <td>
-
                 <img
                style="width: 85px; height: 85px"
                 src="data:image/png;base64,@Html.Raw(item.Image)" />
@@ -48,16 +44,14 @@
 
             <td>
                 
-    <a href="/Blog/Edit/@item.BlogId" class="btn btn-warning"> Edit  </a>
+              <a href="/Blog/Edit/@item.BlogId" class="btn btn-warning"> Edit  </a>
 
             </td>
             <td>
-    <a href="/Blog/Delete/@item.BlogId" class="btn btn-danger"> Delete  </a>
-
+                <a href="/Blog/Delete/@item.BlogId" class="btn btn-danger"> Delete  </a>
             </td>
 
         </tr>
-        
     }
 
   </tbody>

@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@{
+﻿@{
     ViewData["Title"] = "All Blogs";
 }
 
@@ -13,11 +9,6 @@
 }
 
 
-@* @if (User.Identity.IsAuthenticated)
-{
-    <a href="/Blog/Create" class="btn btn-primary">Create New Blog</a>
-} *@
-
 @if(Model.Count == 0)
 {
     <h1>There is no blog</h1>
@@ -26,37 +17,12 @@
 <div  class="story-card-wrapper" >
    @foreach (var item in Model) {
       
-     @* <div class="card" style="width: 18rem;">
-            @if (!string.IsNullOrEmpty(item.Image))
-            {
-              <img src="data:image/png;base64,@Html.Raw(item.Image)" />
-            }
-            else
-            {
-                <img src="~/images/default.jpg" alt="imageX" />
-            }
-           <div class="card-body h-50">
-               <h5 class="card-title">@item.Title</h5>
-                <p class="card-text">@item.Content</p>
-                <p class="card-text">@item.CreatedDateTime</p>
-                <a href="/Blog/Detail/@item.BlogId" class="btn btn-primary">See More </a>
-              
-                
-              </div>
-
-        </div>
-   
-    *@
-  
-  
-
 
     <div class="story-card">
             <a
             href="/Blog/Detail/@item.BlogId"
               class="story-link">
 
-                @* <img class=" story-image" src='#' alt={story.title} /> *@
       @if (!string.IsNullOrEmpty(item.Image))
             {
               <img src="data:image/png;base64,@Html.Raw(item.Image)" 
@@ -69,8 +35,6 @@
                  class=" story-image"
                 />
             }
-
-
                 <div class="story-content-wrapper">
 
                     <h5 class="story-title">
@@ -92,96 +56,4 @@
 </div>
 
 
-<style>
-   
-
-.story-card-wrapper {
-    position: relative;
-    min-height: 850px;
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-}
-
-.story-card {
-    width: 30%;
-    position: relative;
-    height: 460px;
-    border-radius: 6px;
-    margin-bottom: 2rem ;
-    margin-right: 2.3rem ;
-    border: 1px solid rgba(121, 118, 118, 0.3);
-    box-shadow: 0 0 10px 5px rgba(88, 88, 88, 0.1);
-    background-color: white;
-    transition: 350ms ease all;
-    cursor: pointer;
-}
-@@media only screen and (max-width: 1050px) {
-    .story-card-wrapper {
-        width: 100%;
-        justify-content: space-evenly;
-    }
-    .story-card {
-        width: 45%;
-    }
-} 
-
- @@media only screen and (max-width: 674px) {
-    .story-card {
-        width: 380px
-    }
-} 
-
-
-.story-card:hover {
-    transform: scale(1.1);
-}
-
-.story-card a.story-link {
-    text-decoration: none;
-}
-
-.story-card img.story-image {
-    width: 100%;
-    height: 225px;
-    border-radius: 6px 6px 0 0;
-}
-
-.story-card .story-content-wrapper {
-    padding: 14px;
-}
-
-.story-card h5.story-title {
-    font-size: 1.4rem;
-    line-height: 30px;
-    height: 87px;
-    letter-spacing: 0.6px;
-    color: black;
-    padding: 10px 3px;
-    font-weight: bold;
-    margin-bottom: 1.2rem;
-    word-wrap: break-word;
-    font-family: 'Londrina Solid', cursive;
-}
-
-.story-card .story-text {
-    height: 55px;
-    overflow: hidden;
-    word-wrap: break-word;
-}
-
-.story-card .story-text,
-.story-card .story-text * {
-    color: rgb(92, 92, 92);
-    font-size: 1rem;
-    font-weight: normal;
-}
-
-.story-card .story-createdAt {
-    @* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; *@
-    font-family: 'Hanken Grotesk', sans-serif;
-    color: rgb(48, 47, 47);
-}
-</style>
-
+<link rel="stylesheet" href="~/css/blog-index.css">

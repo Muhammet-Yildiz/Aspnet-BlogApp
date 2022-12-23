@@ -5,7 +5,7 @@
 }
 
 <div class="row">
-    <div class="col-4 offset-4">
+    <div class="col-5 offset-4">
         <form  asp-action="Edit"
          enctype="multipart/form-data"
         >
@@ -15,8 +15,6 @@
             
 
             <div class="form-group mb-3">
-              @* <input type="hidden" asp-for="@Model.BlogId" /> *@
-
                 <label asp-for="Title" class="form-label">Title</label>
                 <input asp-for="Title" class="form-control" placeholder="Title" 
                     value="@Model.Title"
@@ -28,6 +26,7 @@
                 <label asp-for="Content" class="form-label">Content</label>
 
                 <textarea type="text" class="form-control" placeholder="Content"   asp-for="Content"
+                style="height: 150px ;resize: none;"
                 value="@Model.Content"
                 ></textarea>
 
@@ -35,18 +34,48 @@
                 
                 asp-validation-for="Content" class="text-danger small"></span>
             </div>
+               
+        <div class="profile-ımg-upld-wrapper">
 
-               <div  class="form-group mb-3" >
-                <label asp-for="Image" class="form-label">Image</label>
-                  <input type="file" asp-for="Image"
+                    <div class="ProfilePhotoField">
+                        <i class="fa-solid fa-user"></i>
+                        <div class="txt">
+
+                            <div>
+                                <i class="fa-solid fa-upload"></i>
+                              <span>
+                              Change Profile Photo
+
+                              </span>
+                            </div>
+                         
+                        </div>
+                          <input type="file" asp-for="Image"
                     value="data:image/png;base64,@Html.Raw(Model.Image)"
                    />
-                <span asp-validation-for="Image" class="text-danger small"></span>
-                @* @Model.Image *@
-                   <img
-                    style="width: 100px; height: 100px;"
-                    src="data:image/png;base64,@Html.Raw(Model.Image)" />
+                      
+                    </div>
+
+
+                    <div class="currentImage">
+                        <div class="absolute">
+                            Currently Image
+                        </div>
+                          @if (!string.IsNullOrEmpty(Model.Image))
+                                {
+                                <img src="data:image/png;base64,@Html.Raw(Model.Image)" 
+                                alt="userPhoto" 
+                                />
+                                }
+                                else
+                                {
+                                    <img src="~/images/user.png" alt="userPhoto" 
+                                    />
+                            }
+                    </div>
+
                 </div>
+
 
             
             <div class="form-group d-grid mb-3">
@@ -55,3 +84,17 @@
         </form>
     </div>
 </div>
+
+<link rel="stylesheet" href="~/css/edit-profile.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('.txt span').text(fileName);
+        });
+    });
+
+</script>

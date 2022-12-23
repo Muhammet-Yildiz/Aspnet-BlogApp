@@ -19,11 +19,8 @@ namespace BlogApp.Models
         [Required]
         public String Role { get; set; } = "user";
 
-
         [DataType(DataType.Upload)]
         public string? ProfileImage { get; set; }
-
-
 
     }
 }

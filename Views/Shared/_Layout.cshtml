@@ -5,159 +5,59 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BlogApp</title>
-
-    @* font awesome *@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BlogApp.styles.css" asp-append-version="true" />
-<link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300&family=Londrina+Solid&family=Staatliches&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300&family=Londrina+Solid&family=Staatliches&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
-    @* <header> *@
-        @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BlogApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                       <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Index">All
-                                Blogs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Create">Create
-                                Blog</a>
-                        </li>
-                        
-                        @if(User.IsInRole("admin")) {
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark ml-4" asp-area="" asp-controller="Admin" asp-action="Index">
-                                Admin Panel</a>
-                        </li>
-                        }
-
-
-                         <li class="nav-item ms-auto">
-                            <a class="nav-link text-dark " asp-area="" asp-controller="Account" asp-action="Profile">
-
-                                Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">
-                                <i class="fa-solid fa-right-to-bracket"></i>
-                                
-                                Logout</a>
-                        </li>
-                        
-                    }
-                    else
-                    {
-
-                        <li class="nav-item ms-auto">
-                            <a class="nav-link text-dark " asp-area="" asp-controller="Account" asp-action="Login">
-                                <i class="fa-solid fa-right-to-bracket"></i>
-                                Login</a>
-                        </li>
-                        
-                        <li class="nav-item ">
-                            <a class="nav-link text-dark " asp-area="" asp-controller="Account" asp-action="Register">
-                                <i class="fa-sharp fa-solid fa-user"></i>
-                                Register</a>
-                        </li>
-                    }
-
-                    </ul>
-                </div>
-            </div>
-        </nav> *@
-
-
-@* ---------------------------------------- *@
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white"
 >
-  <!-- Container wrapper -->
-  <div class="container-sm"
-
-
+  <div class="container-sm d-flex justify-content-between"
     style="padding-top : 10px ; padding-bottom : 10px ;border-bottom: 1px solid rgba(0, 0, 0, 0.1);max-width:1150px !important;"
   >
-    <!-- Toggle button -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Navbar brand -->
-      <a class="navbar-brand mt-2 mt-lg-0" href="/Blog">
-        @* <img
-          src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-          height="15"
-          alt="MDB Logo"
-          loading="lazy"
-        /> *@
-           <h5
-                style="color: #0063a5; font-weight: 600; font-size: 2rem;letter-spacing: 0.7px;font-family: 'Staatliches', cursive;margin-right: 10px;margin-top: 3px;"
-           >
-             BLOG APP
-          </h5>
-      </a>
-      <!-- Left links -->
-         @if(User.IsInRole("admin")) {
-
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="/Admin">Admin Panel</a>
-        </li>
-        @* <li class="nav-item">
-          <a class="nav-link" href="#">Team</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Projects</a>
-        </li> *@
-      </ul>
-         }
-      <!-- Left links -->
-    </div>
-    <!-- Collapsible wrapper -->
-
-    <!-- Right elements -->
-    <div class="d-flex align-items-center">
-      <!-- Icon -->
-
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        
-   @if (User.Identity.IsAuthenticated){
-
-        <li class="nav-item"
-            style="border: 2px solid gray;border-radius : 5px ;margin-right: 10px;"
-        >
-            <a class="nav-link active mr-2" 
-                asp-controller="Blog" asp-action="Create"
+    <div class=" d-flex justify-content-between align-items-center " >
+        <a class="navbar-brand mt-2 mt-lg-0" href="/Blog">
+            <h5
+                  style="color: #0063a5; font-weight: 600; font-size: 2rem;letter-spacing: 0.7px;font-family: 'Staatliches', cursive;margin-right: 10px;margin-top: 3px;"
             >
-                <i class="fa-sharp fa-solid fa-pencil"></i>
-                Add Story </a>
-            </li>
+              BLOG APP
+            </h5>
+        </a>
+          @if(User.IsInRole("admin")) {
+
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" href="/Admin">Admin Panel</a>
+                </li>
+              
+              </ul>
+          }
+    </div>
+
+    <div
+    >
+      <ul class="navbar-nav   mb-lg-0 d-flex align-items-center flex-direction-row"
+      
+      style="flex-direction: row !important;"
+      >
+        
+        @if (User.Identity.IsAuthenticated){
+
+          <li class="nav-item"
+              style="border: 2px solid gray;border-radius : 5px ;margin-right: 10px;"
+          >
+              <a class="nav-link active mr-2" 
+                  asp-controller="Blog" asp-action="Create"
+              >
+                  <i class="fa-sharp fa-solid fa-pencil"></i>
+                  Add Story </a>
+          </li>
             
             <li class="nav-item"
             style="margin-right: 20px;margin-left: 20px;"
@@ -178,8 +78,8 @@
                 Logout</a>
             </li>
 
-   }
-   else {
+          }
+          else {
                     <li class="nav-item "
                         style="margin-right: 20px;"
                     >
@@ -194,92 +94,17 @@
                                 Register</a>
                         </li>
 
-   }
+        }
 
-
-        </ul>
-
-
-
-
-
-      @* <a class="link-secondary me-3" href="#">
-        <i class="fas fa-shopping-cart"></i>
-      </a> *@
-
-      <!-- Notifications -->
-      @* <div class="dropdown">
-        <a
-          class="link-secondary me-3 dropdown-toggle hidden-arrow"
-          href="#"
-          id="navbarDropdownMenuLink"
-          role="button"
-          data-mdb-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <i class="fas fa-bell"></i>
-          <span class="badge rounded-pill badge-notification bg-danger">1</span>
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuLink"
-        >
-          <li>
-            <a class="dropdown-item" href="#">Some news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Another news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
-        </ul>
-      </div> *@
-      <!-- Avatar -->
-      @* <div class="dropdown">
-        <a
-          class="dropdown-toggle d-flex align-items-center hidden-arrow"
-          href="#"
-          id="navbarDropdownMenuAvatar"
-          role="button"
-          data-mdb-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <img
-            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-            class="rounded-circle"
-            height="25"
-            alt="Black and White Portrait of a Man"
-            loading="lazy"
-          />
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuAvatar"
-        >
-          <li>
-            <a class="dropdown-item" href="#">My profile</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Settings</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Logout</a>
-          </li>
-        </ul>
-      </div> *@
-
+      </ul>
 
     </div>
-    <!-- Right elements -->
   </div>
-  <!-- Container wrapper -->
 </nav>
-<!-- Navbar -->
 
 
 
-    @* </header> *@
+
     <div class="container-sm"
         style="
         margin-top: 45px;
@@ -290,15 +115,12 @@
             @RenderBody()
         </main>
     </div>
-
-    @* <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - BlogApp -Coppyright
-        </div>
-    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" ></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

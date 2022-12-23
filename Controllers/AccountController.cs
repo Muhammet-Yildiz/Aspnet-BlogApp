@@ -1,8 +1,7 @@
 using BlogApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using NETCore.Encrypt;
-using System.Security.Claims ;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -30,13 +29,11 @@ namespace BlogApp.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 string md5Salt = _configuration.GetValue<string>("AppSettings:MD5SaltStr");
 
                 string saltedPassword = loginUser.Password + md5Salt;
 
                 string hashedPassword = EncryptProvider.Md5(saltedPassword);
-
 
                 User user = _context.Users.SingleOrDefault(u => u.Email.ToLower() == loginUser.Email.ToLower() && u.Password == hashedPassword);
 
@@ -44,30 +41,27 @@ namespace BlogApp.Controllers
                 if (user != null)
                 {
 
-                  if(user.Locked) {
-                    ModelState.AddModelError("", "Your account is locked");
-                    return View(loginUser);
-                  }
+                    if (user.Locked)
+                    {
+                        ModelState.AddModelError("", "Your account is locked");
+                        return View(loginUser);
+                    }
                     // login işlemi başarılı
                     // session oluştur
- 
-List<Claim> claims =new List<Claim>();
-claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-claims.Add(new Claim(ClaimTypes.Name, user.FullName ?? string.Empty ));
-claims.Add(new Claim(ClaimTypes.Role, user.Role ));
-claims.Add(new Claim("Email", user.Email));
-// claims.Add(new Claim("ProfileImage", user.ProfileImage ?? string.Empty));
 
-// claims.Add(new Claim("ProfileImage", user.ProfileImage ?? string.Empty));
+                    List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Name, user.FullName ?? string.Empty));
+                    claims.Add(new Claim(ClaimTypes.Role, user.Role));
+                    claims.Add(new Claim("Email", user.Email));
 
-ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
 
-      return RedirectToAction("Index", "Blog");
-
+                    return RedirectToAction("Index", "Blog");
 
                 }
                 else
@@ -78,9 +72,7 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
             }
             return View(loginUser);
 
-
         }
-
         public IActionResult Register()
         {
             return View();
@@ -97,14 +89,12 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
                     return View(registerUser);
                 }
 
-
                 string md5Salt = _configuration.GetValue<string>("AppSettings:MD5SaltStr");
 
                 string saltedPassword = registerUser.Password + md5Salt;
 
                 string hashedPassword = EncryptProvider.Md5(saltedPassword);
 
-                // registerUser.Password + _configuration["AppSettings:PasswordSalt"];
 
                 User user = new User()
                 {
@@ -121,21 +111,19 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
             return View(registerUser);
         }
 
-       [Authorize]
+        [Authorize]
         public IActionResult Profile()
         {
-          Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-          User user = _context.Users.SingleOrDefault(u => u.Id == userId);
-       
-          Console.WriteLine("Profile Get", user, user.Email);
+            User user = _context.Users.SingleOrDefault(u => u.Id == userId);
 
-          if(user == null) {
-             return RedirectToAction("NotFound", "Error");
+            if (user == null)
+            {
+                return RedirectToAction("NotFound", "Error");
+            }
 
-          }
-
-          return View(user);
+            return View(user);
 
         }
 
@@ -143,64 +131,62 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
         [HttpGet]
         public IActionResult EditProfile()
         {
-          Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-          User user = _context.Users.SingleOrDefault(u => u.Id == userId);
+            User user = _context.Users.SingleOrDefault(u => u.Id == userId);
 
-
-          return View(user);
+            return View(user);
         }
 
         [Authorize]
         [HttpPost]
-        public async  Task<IActionResult> EditProfile(User user)
+        public async Task<IActionResult> EditProfile(User user)
         {
-          Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-          User userDb = _context.Users.SingleOrDefault(u => u.Id == userId);
+            User userDb = _context.Users.SingleOrDefault(u => u.Id == userId);
 
-          if(userDb == null) {
-            return RedirectToAction("NotFound", "Error");
-          }
-
-          if(userDb.Email != user.Email) {
-            if(_context.Users.Any(u => u.Email == user.Email)) {
-              ModelState.AddModelError("Email", "Email already exists");
-              return View(user);
+            if (userDb == null)
+            {
+                return RedirectToAction("NotFound", "Error");
             }
-          }
 
-         if(Request.Form.Files.Count > 0){
-         var image = Request.Form.Files[0];
+            if (userDb.Email != user.Email)
+            {
+                if (_context.Users.Any(u => u.Email == user.Email))
+                {
+                    ModelState.AddModelError("Email", "Email already exists");
+                    return View(user);
+                }
+            }
 
-         if (image != null && image.Length > 0)
-        {
-           using (var stream = new MemoryStream())
-                        {
-             await image.CopyToAsync(stream);
-        userDb.ProfileImage = Convert.ToBase64String(stream.ToArray());
-                        }
+            if (Request.Form.Files.Count > 0)
+            {
+                var image = Request.Form.Files[0];
+
+                if (image != null && image.Length > 0)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        await image.CopyToAsync(stream);
+                        userDb.ProfileImage = Convert.ToBase64String(stream.ToArray());
                     }
-
                 }
 
-          userDb.FullName = user.FullName;
-          userDb.Email = user.Email;
+            }
 
-          _context.SaveChanges();
+            userDb.FullName = user.FullName;
+            userDb.Email = user.Email;
 
-          return RedirectToAction("Profile", "Account");
-          
+            _context.SaveChanges();
+
+            return RedirectToAction("Profile", "Account");
 
         }
 
 
 
-
-
-
-
-      public IActionResult Logout()
+        public IActionResult Logout()
         {
 
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -208,7 +194,45 @@ HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claim
         }
 
 
+      [Authorize]
+      [HttpGet]
+        public async Task<IActionResult> DeleteAccount(Guid id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("NotFound", "Error");
+            }
+
+            User user = _context.Users.SingleOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                return RedirectToAction("NotFound", "Error");
+            }
+
+            var relatedBlogs = _context.Blogs.Where(b => b.UserId == user.Id).ToList();
+
+            var relatedComments = _context.Comments.Where(c => c.UserId == user.Id).ToList();
+
+            foreach (var blog in relatedBlogs)
+            {
+                _context.Blogs.Remove(blog);
+            }
+
+            foreach (var comment in relatedComments)
+            {
+                _context.Comments.Remove(comment);
+            }
+
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Home");
+        }
 
     }
+
 
 }

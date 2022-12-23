@@ -16,6 +16,5 @@ namespace BlogApp.Models
         [DataType(DataType.Upload)]
         public string? Image { get; set; }
 
-
     }
 }

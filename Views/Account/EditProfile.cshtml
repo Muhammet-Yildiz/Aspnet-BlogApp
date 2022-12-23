@@ -18,7 +18,6 @@
             
 
             <div class="form-group mb-3">
-              @* <input type="hidden" asp-for="@Model.BlogId" /> *@
 
                 <label asp-for="FullName" class="form-label">FullName</label>
                 <input asp-for="FullName" class="form-control" placeholder="FullName" 
@@ -31,8 +30,8 @@
             <div class="form-group mb-3">
                 <label asp-for="Email" class="form-label">Email</label>
                
-<input asp-for="Email" class="form-control" placeholder="Email" 
-               value="@Model.Email"
+                    <input asp-for="Email" class="form-control" placeholder="Email" 
+                      value="@Model.Email"
                 />
                 
                 <span 
@@ -42,7 +41,7 @@
 
 
 
-   <div class="profile-ımg-upld-wrapper">
+        <div class="profile-ımg-upld-wrapper">
 
                     <div class="ProfilePhotoField">
                         <i class="fa-solid fa-user"></i>
@@ -57,11 +56,6 @@
                             </div>
                          
                         </div>
-                        @* <input
-                             name="photo"
-                            type="file"
-
-                        /> *@
                           <input type="file" asp-for="ProfileImage"
                     value="data:image/png;base64,@Html.Raw(Model.ProfileImage)"
                    />
@@ -88,8 +82,6 @@
 
                 </div>
 
-
-            
             <div class="form-group d-grid mb-3">
                 <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Edit Profile</button>
             </div>
