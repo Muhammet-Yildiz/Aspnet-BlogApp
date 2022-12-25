@@ -1,0 +1,8 @@
+<root>
+    <data name="Login">
+    <value>Giriş Yap</value>
+  </data>
+     <data name="Register">
+    <value>Kayıt Ol</value>
+  </data>
+</root>

@@ -68,16 +68,16 @@
                             Currently Image
                         </div>
                           @if (!string.IsNullOrEmpty(Model.ProfileImage))
-            {
-              <img src="data:image/png;base64,@Html.Raw(Model.ProfileImage)" 
-              alt="userPhoto" 
-              />
-            }
-            else
-            {
-                <img src="~/images/user.png" alt="userPhoto" 
-                />
-            }
+                                {
+                                <img src="data:image/png;base64,@Html.Raw(Model.ProfileImage)" 
+                                alt="userPhoto" 
+                                />
+                                }
+                                else
+                                {
+                                    <img src="~/images/user.png" alt="userPhoto" 
+                                    />
+                            }
                     </div>
 
                 </div>

@@ -209,7 +209,7 @@ namespace BlogApp.Controllers
             {
                 return RedirectToAction("NotFound", "Error");
             }
-
+        // LİNQ ORNEK 
             var relatedBlogs = _context.Blogs.Where(b => b.UserId == user.Id).ToList();
 
             var relatedComments = _context.Comments.Where(c => c.UserId == user.Id).ToList();

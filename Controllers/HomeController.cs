@@ -1,11 +1,21 @@
 ﻿using BlogApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Localization;
 namespace BlogApp.Controllers
 {
+
+
+
     public class HomeController : Controller
     {
+        
+        private readonly IStringLocalizer<HomeController> _localizer ;
+        public HomeController(IStringLocalizer<HomeController> localizer)
+        {
+            _localizer = localizer;
+        }
 
         public IActionResult Index()
         {
@@ -15,6 +25,19 @@ namespace BlogApp.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture)
+        {
+            System.Console.WriteLine(culture);
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(3) }
+            );
+
+            return RedirectToAction("Index");
         }
       
 

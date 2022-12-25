@@ -40,6 +40,14 @@
           }
     </div>
 
+    <form id="selectLanguage" asp-controller="Home" asp-action="SetLanguage" method="post" class="form-horizontal" role="form">
+    @* <label for="culture">Dil:</label> *@
+    <select name="culture" onchange="this.form.submit();">
+        <option value="en-US" selected>English (US)</option>
+        <option value="tr-TR">Türkçe</option>
+    </select>
+</form>
+
     <div
     >
       <ul class="navbar-nav   mb-lg-0 d-flex align-items-center flex-direction-row"
