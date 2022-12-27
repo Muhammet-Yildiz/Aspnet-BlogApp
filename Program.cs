@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.Extensions.Options ;
-using  Microsoft.AspNetCore.Builder ;
+using System.Reflection; 
+using BlogApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,32 +14,35 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    var supportedCultures = new List<CultureInfo>
-    {
-        new CultureInfo("en-US"),
-        new CultureInfo("tr-TR")
-    };
-
-    options.DefaultRequestCulture = new RequestCulture("tr-TR");
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-    options.RequestCultureProviders = new List<IRequestCultureProvider>
-    {
-        new QueryStringRequestCultureProvider(),
-        new CookieRequestCultureProvider(),
-        new AcceptLanguageHeaderRequestCultureProvider()
-    };
-});
-
 builder.Services.AddMvc()
-.AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
+  .AddViewLocalization()
+    .AddDataAnnotationsLocalization(options =>
+    {
+     options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    { 
+       var assemblyName = new AssemblyName(typeof(Naber).GetTypeInfo().Assembly.FullName);
 
+       return factory.Create("Naber", assemblyName.Name);
 
+      };
+ });
 
-// builder.Services.AddDbContext<BlogContext> ; 
+builder.Services.Configure<RequestLocalizationOptions>(
+                options =>
+                {
+                    var supportedCultures = new List<CultureInfo>
+                        {
+                            new CultureInfo("en-US"),
+                            new CultureInfo("tr-TR"),
+                        };
+
+                    options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+                    options.SupportedCultures = supportedCultures;
+                    options.SupportedUICultures = supportedCultures;
+                    options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
+
+                });
+
 builder.Services.AddDbContext<BlogApp.Models.MainContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -63,6 +67,14 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
+
+//  var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+// var options2 = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+// var opt = app.Services.GetService <IOptions<RequestLocalizationOptions>>().Value;
+var options = ((IApplicationBuilder)app).ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>();
+
+app.UseRequestLocalization(options.Value);
+//  app.UseRequestLocalization(opt);
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -73,9 +85,9 @@ app.UseAuthorization();
 
 // var options2 = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
 
-var opt = app.Services.GetService <IOptions<RequestLocalizationOptions>>().Value;
+// var opt = app.Services.GetService <IOptions<RequestLocalizationOptions>>().Value;
 
-app.UseRequestLocalization(opt);
+// app.UseRequestLocalization(opt);
 
 
 app.MapControllerRoute(

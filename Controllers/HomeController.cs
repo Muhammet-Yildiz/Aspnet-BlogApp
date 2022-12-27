@@ -11,12 +11,6 @@ namespace BlogApp.Controllers
     public class HomeController : Controller
     {
         
-        private readonly IStringLocalizer<HomeController> _localizer ;
-        public HomeController(IStringLocalizer<HomeController> localizer)
-        {
-            _localizer = localizer;
-        }
-
         public IActionResult Index()
         {
             return RedirectToAction("Index", "Blog");
@@ -27,17 +21,14 @@ namespace BlogApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult SetLanguage(string culture)
+        // [HttpPost]
+        public IActionResult ChangeLanguage(string culture)
         {
-            System.Console.WriteLine(culture);
-            Response.Cookies.Append(
-                CookieRequestCultureProvider.DefaultCookieName,
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(3) }
-            );
+                new CookieOptions() { Expires = DateTimeOffset.UtcNow.AddYears(1) });
 
-            return RedirectToAction("Index");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
       
 

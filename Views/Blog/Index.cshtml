@@ -2,7 +2,9 @@
     ViewData["Title"] = "All Blogs";
 }
 
+
 @model List<BlogApp.Models.Blog>
+@* @inject LanguageService language *@
 
 @{
     ViewData["Title"] = "Index";
@@ -54,6 +56,14 @@
    }
 
 </div>
+
+
+
+@* <div class="text-center">
+
+    <h1 class="display-4">@language.Getkey("Login")</h1>
+
+</div>  *@
 
 
 <link rel="stylesheet" href="~/css/blog-index.css">

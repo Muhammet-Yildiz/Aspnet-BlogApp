@@ -1,8 +1,8 @@
 <root>
     <data name="Login">
-    <value>LOGİDW</value>
+    <value>LOGİN</value>
   </data>
      <data name="Register">
-    <value>KREF</value>
+    <value>REFF</value>
   </data>
 </root>

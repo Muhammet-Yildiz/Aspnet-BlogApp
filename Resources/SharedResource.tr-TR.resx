@@ -1,8 +1,8 @@
 <root>
     <data name="Login">
-    <value>Giriş Yap</value>
+    <value>GİRİŞ YAP </value>
   </data>
      <data name="Register">
-    <value>Kayıt Ol</value>
+    <value>KAYIT OL </value>
   </data>
 </root>

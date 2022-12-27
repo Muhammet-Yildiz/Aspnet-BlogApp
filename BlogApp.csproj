@@ -7,13 +7,13 @@
   </PropertyGroup>
   <ItemGroup>
  
-    <EmbeddedResource Include="en-US.resx" />
+    <!-- <EmbeddedResource Include="en-US.resx" /> -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.11"/>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.11"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.11"/>
     <PackageReference Include="NETCore.Encrypt" Version="2.1.1"/>
   
-    <EmbeddedResource Include="Resources\Languages\*.resx" />
+    <EmbeddedResource Include="Resources\*.resx" />
   </ItemGroup>
 </Project>
