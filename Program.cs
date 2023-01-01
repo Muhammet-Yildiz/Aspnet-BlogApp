@@ -18,11 +18,11 @@ builder.Services.AddMvc()
   .AddViewLocalization()
     .AddDataAnnotationsLocalization(options =>
     {
-     options.DataAnnotationLocalizerProvider = (type, factory) =>
+         options.DataAnnotationLocalizerProvider = (type, factory) =>
                     { 
-       var assemblyName = new AssemblyName(typeof(Naber).GetTypeInfo().Assembly.FullName);
+       var assemblyName = new AssemblyName(typeof(ChangeLang).GetTypeInfo().Assembly.FullName);
 
-       return factory.Create("Naber", assemblyName.Name);
+       return factory.Create("ChangeLang", assemblyName.Name);
 
       };
  });

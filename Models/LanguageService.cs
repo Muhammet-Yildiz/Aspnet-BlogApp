@@ -9,7 +9,7 @@ namespace BlogApp.Models
 
         public LanguageService(IStringLocalizerFactory factory)
         {
-            var type = typeof(Naber);
+            var type = typeof(ChangeLang);
             var assemblyName = new AssemblyName(type.GetTypeInfo().Assembly.FullName);
             _localizer = factory.Create("SharedResource", assemblyName.Name);
         }
